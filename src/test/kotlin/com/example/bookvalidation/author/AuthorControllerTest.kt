@@ -1,17 +1,15 @@
-package com.example.bookvalidation
+package com.example.bookvalidation.author
 
-import org.hamcrest.Matchers
 import org.hamcrest.core.StringContains.containsString
 import org.junit.jupiter.api.Test
 
-import org.junit.jupiter.api.Assertions.*
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest
-import org.springframework.http.HttpStatus
 import org.springframework.test.web.servlet.MockMvc
-import org.springframework.test.web.servlet.get
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
+import org.springframework.test.web.servlet.result.MockMvcResultHandlers
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers
 
 
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.content
@@ -24,11 +22,13 @@ internal class AuthorControllerTest {
     lateinit var mockMvc: MockMvc
 
     @Test
-    fun `getAuthorFromLegacyApi should deserialize author name - Tom`() {
+    fun `getAuthorFromLegacyApi should deserialize author name - Joe`() {
 
-        this.mockMvc.perform(get("/author/5?author[name]=Tom"))
+        this.mockMvc.perform(get("/author/5?author[name]=Joe&country=England"))
             .andExpect(status().isOk)
-            .andExpect(content().string(containsString("Tom")))
+            .andDo(MockMvcResultHandlers.print())
+            .andExpect(content().string(containsString("Joe")))
+            .andExpect(MockMvcResultMatchers.jsonPath("$.author").value("Joe"))
     }
 
     @Test
