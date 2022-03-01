@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
+import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 
 
@@ -22,8 +23,7 @@ class AuthorController {
 
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 data class AuthorDto(
-    @param:JsonProperty(value = "author[name]")
-    @get:JsonProperty(value = "author[name]")
+    @RequestParam(name = "author[name]")
     val name: String?,
     // long list of different query parameters
     val country: String? = null,

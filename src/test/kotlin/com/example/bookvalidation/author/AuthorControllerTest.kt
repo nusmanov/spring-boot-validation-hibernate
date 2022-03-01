@@ -30,13 +30,4 @@ internal class AuthorControllerTest {
             .andExpect(content().string(containsString("Joe")))
             .andExpect(MockMvcResultMatchers.jsonPath("$.author").value("Joe"))
     }
-
-    @Test
-    fun getAuthorFromLegacyApi_negativ_test() {
-
-        this.mockMvc.perform(get("/author/5"))
-            .andExpect(status().isOk)
-            .andExpect(content().string(containsString("")))
-    }
-
 }
